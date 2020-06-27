@@ -32,6 +32,13 @@ namespace CovidStatApi
 
             services.AddSwaggerGen();
 
+            services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(builder => {
+                    builder.WithOrigins("https://localhost:12345");
+                });
+            });
+
             services.AddDbContext<CovidStatsProjectContext>(options => options.UseMySQL(Configuration.GetConnectionString("CovidData")));
             services.AddScoped<CountryService>();
         }
@@ -50,10 +57,9 @@ namespace CovidStatApi
                     c.SwaggerEndpoint("/swagger/v1/swagger.json", $"{Constants.ApplicationName} v1");
                 });
 
-            app.UseHttpsRedirection();
-
+         //   app.UseHttpsRedirection(); TODO
             app.UseRouting();
-
+            app.UseCors();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

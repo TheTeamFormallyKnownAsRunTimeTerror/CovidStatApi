@@ -14,7 +14,7 @@ namespace CovidStatApi.Controllers
     [ApiController]
     public class CountryController : ControllerBase
     {
-
+        //TODO logging
         private CountryService _countryService;
 
         public CountryController(CountryService countryService)
@@ -30,11 +30,11 @@ namespace CovidStatApi.Controllers
             {
                 var countryData = _countryService.GetLatestDataByCountry(countryCode);
 
-                var response = countryData.MapToLatestStateResponse();
+                var response = countryData.MapToResponse();
 
                 return Ok(response);
             }
-            catch
+            catch(Exception ex)
             {
                 return StatusCode(500); //TODO check this
             }
@@ -42,8 +42,24 @@ namespace CovidStatApi.Controllers
         }
 
         [HttpGet]
+        [Route("countries")]
+        public IActionResult GetBasicInfoForAllCountries()
+        {
+            try
+            {
+                var countryInfo = _countryService.GetBasicInfoForAllCountries().Select(ci => ci.MapToResponse());
+                return Ok(countryInfo);
+            }
+            catch(Exception ex)
+            {
+                return StatusCode(500);
+            }
+            
+        }
+
+        [HttpGet]
         [Route("latest")]
-        public IActionResult GetGlobalLastestData()
+        public IActionResult GetLatestDataForAllCountries()
         {
             return Ok();
         }
@@ -54,5 +70,6 @@ namespace CovidStatApi.Controllers
         {
             return Ok();
         }
+
     }
 }
