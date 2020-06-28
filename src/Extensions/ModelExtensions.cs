@@ -28,6 +28,20 @@ namespace CovidStatApi.Extensions
                 CountryName = data.CountryName
             };
         }
+
+        public static HistoricDataResponse MapToHistoricResponse(this CountryData data)
+        {
+            return new HistoricDataResponse()
+            {
+                Active = data.ActiveCases,
+                Confirmed = data.ConfirmedCases,
+                CountryCode = data.CountryCode,
+                CountryName = data.CountryName,
+                Date = data.DateTime,
+                Deaths = data.Deaths,
+                Recovered = data.Recovered
+            };
+        }
         
         //TODO
         public static CountryInfoResponse MapToResponse(this CountryInfo info)

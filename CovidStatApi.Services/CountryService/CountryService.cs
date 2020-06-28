@@ -57,6 +57,10 @@ namespace CovidStatApi.Services
             return result;
         }
 
+        public List<CountryData> GetHistoricCountryData(string countryCode) =>
+                    _covidDataContext.CountryData.Where(cd => cd.CountryCode == countryCode).ToList();
+        
+
         private List<CountryData> FilterByLatest(List<CountryData> allData)
         {
             var latest = allData.GroupBy(d => new { d.Latitude, d.Longitude }).Select(g => g.Where(c => c.DateTime == g.Max(c => c.DateTime)).FirstOrDefault());
