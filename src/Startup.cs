@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using CovidStatApi.Models;
 using CovidStatApi.Services;
+using CovidStatApi.Services.CacheService;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -41,6 +42,8 @@ namespace CovidStatApi
 
             services.AddDbContext<CovidStatsProjectContext>(options => options.UseMySQL(Configuration.GetConnectionString("CovidData")));
             services.AddScoped<CountryService>();
+            services.AddHostedService<CacheService>();
+            services.AddMemoryCache();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

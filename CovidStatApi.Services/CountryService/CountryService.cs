@@ -2,6 +2,7 @@
 using CovidStatApi.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
+using Microsoft.Extensions.Caching.Memory;
 using Org.BouncyCastle.Cms;
 using System;
 using System.Collections.Generic;
@@ -15,10 +16,12 @@ namespace CovidStatApi.Services
     {
         //dbContext registered as Scoped by default - will be disposed automatically
         private CovidStatsProjectContext _covidDataContext;
+        private IMemoryCache _cache;
 
-        public CountryService(CovidStatsProjectContext covidDataContext)
+        public CountryService(CovidStatsProjectContext covidDataContext, IMemoryCache cache)
         {
             _covidDataContext = covidDataContext;
+            _cache = cache;
         }
         public CountryData GetLatestDataByCountry(string countryCode)
         {
@@ -34,22 +37,29 @@ namespace CovidStatApi.Services
         //TODO this will need a refactor, does the job for now
         public List<CountryData> GetBasicInfoForAllCountries()
         {
+            if(_cache.TryGetValue("latestBasicInfo", out List<CountryData> cachedResult ))
+            {
+                return cachedResult;
+            }
+
             var countryInfo = from cd in _covidDataContext.CountryData
                               join c in _covidDataContext.Countries on
                               cd.CountryCode equals c.Iso2
-                              where c.HasData != null && c.HasData != 0
+                              where c.HasData != null && c.HasData != 0 && cd.CountryCode != "US"
                               orderby cd.DateTime descending
                               select cd;
                               
 
             var countryList = countryInfo.ToList();
 
-            return FilterByLatest(countryList);
+            var result = FilterByLatest(countryList);
+            _cache.Set("latestBasicInfo", result, TimeSpan.FromDays(1)); //TODO invalidate
+            return result;
         }
 
         private List<CountryData> FilterByLatest(List<CountryData> allData)
         {
-            var latest = allData.GroupBy(d => d.CountryCode).Select(g => g.Where(c => c.DateTime == g.Max(c => c.DateTime)).FirstOrDefault());
+            var latest = allData.GroupBy(d => new { d.Latitude, d.Longitude }).Select(g => g.Where(c => c.DateTime == g.Max(c => c.DateTime)).FirstOrDefault());
 
             return latest.ToList();
         }
