@@ -81,5 +81,23 @@ namespace CovidStatApi.Controllers
             }
         }
 
+        [HttpGet]
+        [Route("base")]
+        public IActionResult GetBaseCountryInformation()
+        {
+            try
+            {
+                _logger.LogInformation($"Retrieving base country information");
+                var listOfCountryData = _countryService.GetBaseCountryInformation();
+                var response = listOfCountryData.MapBaseInfoToResponse();
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Exception while retrieving base country information: {ex}");
+                return StatusCode(500);
+            }
+        }
+
     }
 }
