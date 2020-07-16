@@ -1,25 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace CovidStatApi.Models
+namespace CovidStatApi.Responses
 {
-    public partial class Countries
+    public class BaseCountryInformationResponse
     {
-        public Countries()
-        {
-            CountryData = new HashSet<CountryData>();
-        }
-
-        public int CountryId { get; set; }
         public string CountryName { get; set; }
-        public string CountrySlug { get; set; }
         public string Iso2 { get; set; }
-        public byte? HasData { get; set; }
-
-        public virtual ICollection<CountryData> CountryData { get; set; }
-
-        // Enriched Data from OWID
-
         public double Population { get; set; }
         public double PopulationDensity { get; set; }
         public double MedianAge { get; set; }
@@ -30,5 +19,6 @@ namespace CovidStatApi.Models
         public double HandwashingFacilities { get; set; }
         public double HospitalBedsPerThousand { get; set; }
         public double LifeExpectancy { get; set; }
+
     }
 }

@@ -25,7 +25,8 @@ namespace CovidStatApi.Extensions
                 Longitude = float.Parse(data.Longitude), //TODO
                 Recovered = data.Recovered,
                 CountryId = data.CountryCode,
-                CountryName = data.CountryName
+                CountryName = data.CountryName,
+
             };
         }
 
@@ -54,6 +55,33 @@ namespace CovidStatApi.Extensions
                 Longitude = float.Parse(info.Longitude),
                 Active = info.Active
             };
+        }
+
+        public static List<BaseCountryInformationResponse> MapBaseInfoToResponse(this List<Countries> listOfCountryData)
+        {
+            var responseList = new List<BaseCountryInformationResponse>();
+            foreach (var country in listOfCountryData)
+            {
+                var countryToAdd = new BaseCountryInformationResponse()
+                {
+                    CountryName = country.CountryName,
+                    Iso2 = country.Iso2,
+                    Population = country.Population,
+                    PopulationDensity = country.PopulationDensity,
+                    MedianAge = country.MedianAge,
+                    Aged65Older = country.Aged65Older,
+                    Aged70Older = country.Aged70Older,
+                    LifeExpectancy = country.LifeExpectancy,
+                    GdpPerCapita = country.GdpPerCapita,
+                    DiabetesPrevalence = country.DiabetesPrevalence,
+                    HandwashingFacilities = country.HandwashingFacilities,
+                    HospitalBedsPerThousand = country.HospitalBedsPerThousand
+                };
+
+                responseList.Add(countryToAdd);
+            }
+
+            return responseList;
         }
     }
 }
