@@ -33,12 +33,7 @@ namespace CovidStatApi
 
             services.AddSwaggerGen();
 
-            services.AddCors(options =>
-            {
-                options.AddDefaultPolicy(builder => {
-                    builder.WithOrigins("https://localhost:12345");
-                });
-            });
+            services.AddCors();
 
             services.AddDbContext<CovidStatsProjectContext>(options => options.UseMySQL(Configuration.GetConnectionString("CovidData")));
             services.AddScoped<CountryService>();
@@ -62,7 +57,12 @@ namespace CovidStatApi
 
          //   app.UseHttpsRedirection(); TODO
             app.UseRouting();
-            app.UseCors();
+
+            app.UseCors(builder => builder
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader());
+
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
