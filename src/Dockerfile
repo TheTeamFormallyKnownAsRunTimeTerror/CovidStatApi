@@ -10,7 +10,7 @@ EXPOSE 5001
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /src
 COPY ["CovidStatApi.csproj", ""]
-RUN dotnet restore "./CovidStatApi.csproj"
+RUN dotnet restore -s https://api.nuget.org/v3/index.json "./CovidStatApi.csproj"
 COPY . .
 WORKDIR "/src/."
 RUN dotnet build "CovidStatApi.csproj" -c Release -o /app/build
