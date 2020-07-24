@@ -1,16 +1,11 @@
-﻿using CovidStatApi.Domain.Domain;
-using CovidStatApi.Models;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Internal;
-using Microsoft.Extensions.Caching.Memory;
-using Org.BouncyCastle.Cms;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Security.Cryptography;
+using CovidStatApi.Domain.Models;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Memory;
 
-namespace CovidStatApi.Services
+namespace CovidStatApi.Services.CountryService
 {
     public class CountryService
     {
