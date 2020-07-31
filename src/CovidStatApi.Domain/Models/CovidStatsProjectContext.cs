@@ -1,9 +1,6 @@
-﻿using System;
-using System.Configuration;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
+﻿using Microsoft.EntityFrameworkCore;
 
-namespace CovidStatApi.Models
+namespace CovidStatApi.Domain.Models
 {
     public partial class CovidStatsProjectContext : DbContext
     {

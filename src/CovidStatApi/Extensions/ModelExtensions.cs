@@ -1,11 +1,7 @@
 ﻿using CovidStatApi.Domain.Domain;
-using CovidStatApi.Models;
 using CovidStatApi.Responses;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
+using CovidStatApi.Domain.Models;
 
 namespace CovidStatApi.Extensions
 {

@@ -1,0 +1,14 @@
+version: 0.2
+phases:
+  pre_build:
+    commands:
+      - echo Restore started on `date`
+      - dotnet restore src/CovidStatApi.csproj
+  build:
+    commands:
+      - echo Build started on `date`
+      - dotnet publish -c release -o ./CovidStatApi/build_output src/CovidStatApi.csproj
+artifacts:
+  files:
+    - '**/*'
+  name: myname-$(date +%Y-%m-%d)

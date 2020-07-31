@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
-namespace CovidStatApi.Models
+namespace CovidStatApi.Domain.Models
 {
     public partial class Countries
     {

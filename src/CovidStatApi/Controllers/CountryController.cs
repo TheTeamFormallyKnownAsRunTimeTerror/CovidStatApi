@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using CovidStatApi.Extensions;
 using CovidStatApi.Services;
+using CovidStatApi.Services.CountryService;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
