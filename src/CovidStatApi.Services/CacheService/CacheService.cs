@@ -39,12 +39,19 @@ namespace CovidStatApi.Services.CacheService
                 var countryInfo = from cd in dbContext.CountryData
                                   join c in dbContext.Countries on
                                   cd.CountryCode equals c.Iso2
-                                  where c.HasData != null && c.HasData != 0 && cd.CountryCode != "US"
+                                  where c.HasData != null && c.HasData != 0 
+                                                          &&  cd.CountryCode != "US"
+                                                          && cd.CountryCode != "FR" 
+                                                          && cd.CountryCode != "GB"
+                                                          && cd.CountryCode != "CA"
+                                                          && cd.CountryCode != "NL"
+                                                          && cd.CountryCode != "DK"
                                   orderby cd.DateTime descending
                                   select cd;
 
 
                 var countryList = countryInfo.ToList();
+                
 
                 var result = FilterByLatest(countryList);
                 _memCache.Set("latestBasicInfo", result, TimeSpan.FromDays(7)); //TODO service will be notified to update cache

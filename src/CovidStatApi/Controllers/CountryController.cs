@@ -99,6 +99,25 @@ namespace CovidStatApi.Controllers
                 return StatusCode(500);
             }
         }
+        [HttpGet]
+        [Route("combined")]
+        public IActionResult GetCombinedCountryInformation()
+        {
+            try
+            {
+                
+                _logger.LogInformation($"Retrieving combined country information");
+                var listOfStaticCountryData = _countryService.GetBaseCountryInformation();
+                var listOfCountryData = _countryService.GetBasicInfoForAllCountries();
+                var response = CountryDataCombiner.MapCombinedCountryInformation(listOfStaticCountryData, listOfCountryData);
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Exception while retrieving base country information: {ex}");
+                return StatusCode(500);
+            }
+        }
 
     }
 }
