@@ -1,4 +1,7 @@
-﻿namespace CovidStatApi.Domain.Models
+﻿using System;
+using System.Collections.Generic;
+
+namespace CovidStatApi.Domain.Models
 {
     public partial class EfmigrationsHistory
     {
