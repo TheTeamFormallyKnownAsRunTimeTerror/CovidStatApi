@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace CovidStatApi.Domain.Models
 {
@@ -14,20 +15,17 @@ namespace CovidStatApi.Domain.Models
         public string CountrySlug { get; set; }
         public string Iso2 { get; set; }
         public byte? HasData { get; set; }
-
-        public virtual ICollection<CountryData> CountryData { get; set; }
-
-        // Enriched Data from OWID
-
-        public double Population { get; set; }
-        public double PopulationDensity { get; set; }
-        public double MedianAge { get; set; }
         public double Aged65Older { get; set; }
         public double Aged70Older { get; set; }
-        public double GdpPerCapita { get; set; }
         public double DiabetesPrevalence { get; set; }
+        public double GdpPerCapita { get; set; }
         public double HandwashingFacilities { get; set; }
         public double HospitalBedsPerThousand { get; set; }
         public double LifeExpectancy { get; set; }
+        public double MedianAge { get; set; }
+        public double Population { get; set; }
+        public double PopulationDensity { get; set; }
+
+        public virtual ICollection<CountryData> CountryData { get; set; }
     }
 }

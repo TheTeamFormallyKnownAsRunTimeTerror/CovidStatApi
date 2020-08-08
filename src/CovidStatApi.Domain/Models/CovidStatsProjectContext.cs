@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace CovidStatApi.Domain.Models
 {
@@ -15,7 +17,17 @@ namespace CovidStatApi.Domain.Models
 
         public virtual DbSet<Countries> Countries { get; set; }
         public virtual DbSet<CountryData> CountryData { get; set; }
+        public virtual DbSet<CountryStatistics> CountryStatistics { get; set; }
         public virtual DbSet<EfmigrationsHistory> EfmigrationsHistory { get; set; }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
+                optionsBuilder.UseMySQL("Server=covid-data-runtimeterror-dev.cmfckbnwttaa.eu-west-1.rds.amazonaws.com; Database=CovidStatsProject;user=admin;password=8n6FaTZYujfIxGDHlIuD; Connection Timeout=30;");
+            }
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -77,6 +89,22 @@ namespace CovidStatApi.Domain.Models
                 entity.HasOne(d => d.CountriesCountry)
                     .WithMany(p => p.CountryData)
                     .HasForeignKey(d => d.CountriesCountryId);
+            });
+
+            modelBuilder.Entity<CountryStatistics>(entity =>
+            {
+                entity.HasKey(e => e.CountryId)
+                    .HasName("PRIMARY");
+
+                entity.Property(e => e.CountryId).HasColumnType("int(11)");
+
+                entity.Property(e => e.CountryCode).HasColumnType("longtext");
+
+                entity.Property(e => e.CountryName).HasColumnType("longtext");
+
+                entity.Property(e => e.GrangerStatistics).HasColumnType("longtext");
+
+                entity.Property(e => e.MeasureImportances).HasColumnType("longtext");
             });
 
             modelBuilder.Entity<EfmigrationsHistory>(entity =>

@@ -119,5 +119,23 @@ namespace CovidStatApi.Controllers
             }
         }
 
+        [HttpGet]
+        [Route("stats/{countryCode}")]
+        public IActionResult GetCountryStatistics(string countryCode)
+        {
+            try
+            {
+                _logger.LogInformation($"Retrieving country statistics for country {countryCode}");
+                var countryStats = _countryService.GetStatistics(countryCode);
+
+                return Ok(countryStats);
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError($"Exception while retrieving country statistic information: {ex}");
+                return StatusCode(500);
+            }
+        }
+
     }
 }

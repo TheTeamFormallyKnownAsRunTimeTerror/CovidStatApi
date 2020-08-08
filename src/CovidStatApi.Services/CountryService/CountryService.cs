@@ -62,6 +62,11 @@ namespace CovidStatApi.Services.CountryService
             return result;
         }
 
+        public CountryStatistics GetStatistics(string countryCode)
+        {
+            return _covidDataContext.CountryStatistics.Where(cs => cs.CountryCode == countryCode).FirstOrDefault();
+        }
+
         public List<Countries> GetBaseCountryInformation()
         {
             var countryData = _covidDataContext.Countries

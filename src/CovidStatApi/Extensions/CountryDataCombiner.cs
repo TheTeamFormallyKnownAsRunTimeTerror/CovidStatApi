@@ -18,6 +18,7 @@ namespace CovidStatApi.Extensions
 
                 covidData = listOfCountryData.FirstOrDefault(x => x.CountryId == country.CountryId);
 
+                //TODO - add stats to combined info potentially
                 var countryToAdd = new CombinedCountryInfoResponse()
                 {
                     CountryName = country.CountryName,
