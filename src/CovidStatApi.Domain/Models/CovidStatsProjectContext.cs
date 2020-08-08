@@ -25,7 +25,7 @@ namespace CovidStatApi.Domain.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseMySQL("Server=covid-data-runtimeterror-dev.cmfckbnwttaa.eu-west-1.rds.amazonaws.com;Database=CovidStatsProject;user=admin;password=8n6FaTZYujfIxGDHlIuD; Connection Timeout=30;");
+                optionsBuilder.UseMySQL("Server=covid-data-runtimeterror-dev.cmfckbnwttaa.eu-west-1.rds.amazonaws.com; Database=CovidStatsProject;user=admin;password=8n6FaTZYujfIxGDHlIuD; Connection Timeout=30;");
             }
         }
 
@@ -97,6 +97,8 @@ namespace CovidStatApi.Domain.Models
                     .HasName("PRIMARY");
 
                 entity.Property(e => e.CountryId).HasColumnType("int(11)");
+
+                entity.Property(e => e.CountryCode).HasColumnType("longtext");
 
                 entity.Property(e => e.CountryName).HasColumnType("longtext");
 

@@ -9,5 +9,6 @@ namespace CovidStatApi.Domain.Models
         public string CountryName { get; set; }
         public string MeasureImportances { get; set; }
         public string GrangerStatistics { get; set; }
+        public string CountryCode { get; set; }
     }
 }
